@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kiosk Ordering System</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Additional CSS for active button styling */
+        .menu-categories button.active {
+            background-color: #555;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        /* Styles for receipt printing */
+        @media print {
+            body * {
+                visibility: hidden; /* Hide everything */
+            }
+            .receipt-modal, .receipt-modal * {
+                visibility: visible; /* Show only receipt modal */
+            }
+            .receipt-modal {
+                position: absolute; /* Position receipt modal to prevent scrolling */
+                left: 0;
+                top: 0;
+                width: 100%; /* Ensure it occupies full width */
+                height: auto; /* Adjust height automatically */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="kiosk">
+        <header>
+            <h1>Lexshas Restaurant Kiosk</h1>
+        </header>
+
+        <div class="main-content">
+            <aside class="menu-categories">
+                <button id="allBtn" class="active" onclick="showCategory('all')">All</button>
+                <button onclick="showCategory('burgers')">Burgers</button>
+                <button onclick="showCategory('pizzas')">Pizzas</button>
+                <button onclick="showCategory('sides')">Sides</button>
+                <button onclick="showCategory('drinks')">Drinks</button>
+            </aside>
+
+            <section id="menu" class="menu-items">
+                <div class="menu-item" data-category="burgers" onclick="addItem('Burger', 65.00)">
+                    <img src="burger.jpg" alt="Burger">
+                    <p>Burger</p>
+                    <span>65.00</span>
+                </div>
+                <div class="menu-item" data-category="pizzas" onclick="addItem('Pizza', 130.00)">
+                    <img src="pizza.jpg" alt="Pizza">
+                    <p>Pizza</p>
+                    <span>130.00</span>
+                </div>
+                <div class="menu-item" data-category="sides" onclick="addItem('Fries', 60.00)">
+                    <img src="fries.jpg" alt="Fries">
+                    <p>Fries</p>
+                    <span>60.00</span>
+                </div>
+                <div class="menu-item" data-category="drinks" onclick="addItem('Soda', 40.00)">
+                    <img src="soda.jpg" alt="Soda">
+                    <p>Soda</p>
+                    <span>40.00</span>
+                </div>
+            </section>
+        </div>
+
+        <footer class="cart-summary">
+            <h2>Your Order</h2>
+            <ul id="orderList"></ul>
+            <p class="total">Total: <span id="total">0.00</span></p>
+            <button class="checkout-btn" onclick="showReceipt()">Checkout</button>
+            <button class="clear-btn" onclick="clearOrder()">Clear Order</button>
+        </footer>
+    </div>
+
+    <!-- Receipt Modal -->
+    <div id="receiptModal" class="receipt-modal" style="display: none;">
+        <div class="receipt-content">
+            <span class="close" onclick="closeReceipt()">&times;</span>
+            <h2>Receipt</h2>
+            <p>Customer Number: <span id="customerNumber"></span></p>
+            <ul id="receiptList"></ul>
+            <p class="receipt-total">Total: $<span id="receiptTotal">0.00</span></p>
+            <button class="print-btn" onclick="printReceipt()">Print Receipt</button>
+            <button class="close-btn" onclick="closeReceipt()">Close</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
